@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "732311150417",
+    "project_id": "ucedateapp",
+    "storage_bucket": "ucedateapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732311150417:android:4b1f9afe954394fcde3d70",
+        "android_client_info": {
+          "package_name": "com.example.FinalProject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAa17FWTfqghG1SToLmvhVMcQ0dfGeaAjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732311150417:android:540930c9959ca80ade3d70",
+        "android_client_info": {
+          "package_name": "com.example.finalproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAa17FWTfqghG1SToLmvhVMcQ0dfGeaAjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
