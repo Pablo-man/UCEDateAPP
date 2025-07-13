@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.google.gms.google.services)
 }
 
-
 android {
     namespace = "com.example.finalproject"
     compileSdk = 36
@@ -16,7 +15,6 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -29,21 +27,24 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
-        viewBinding = true
+        // viewBinding = true // ❌ innecesario con Jetpack Compose
     }
 }
 
 dependencies {
-
+    // AndroidX + Compose
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -53,9 +54,15 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
+
+    // Firebase
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.auth) // firebase-auth (core, necesario para verificación)
     implementation(libs.firebase.firestore.ktx)
-    implementation(libs.firebase.auth)
+    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation(libs.androidx.navigation.compose)
+
+    // Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -63,9 +70,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.google.firebase:firebase-auth-ktx:22.1.1")
-    implementation("com.google.firebase:firebase-auth-ktx:23.2.1")
-
 }
