@@ -39,7 +39,7 @@ android {
 
     buildFeatures {
         compose = true
-        // viewBinding = true // ❌ innecesario con Jetpack Compose
+
     }
 }
 
