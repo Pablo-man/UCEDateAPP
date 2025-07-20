@@ -1,4 +1,4 @@
-package com.example.finalproject.ui.navigation
+package com.example.finalproject.ui.Screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

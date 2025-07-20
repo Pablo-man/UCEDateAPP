@@ -1,4 +1,4 @@
-package com.example.finalproject.ui.navigation
+package com.example.finalproject.ui.Screens
 
 import android.util.Patterns
 import android.widget.Toast
@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.finalproject.ui.Navigation.AppNavigation
+import com.example.finalproject.ui.Navigation.AppScreens
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -69,8 +71,8 @@ fun LoginScreen(navController: NavHostController) {
                         val user = auth.currentUser
                         if (user != null && user.isEmailVerified) {
                             Toast.makeText(context, "Bienvenido", Toast.LENGTH_SHORT).show()
-                            navController.navigate(NavRoutes.Home.route) {
-                                popUpTo(NavRoutes.Login.route) { inclusive = true }
+                            navController.navigate(AppScreens.NameScreen.route) {
+                                popUpTo(AppScreens.LoginScreen.route) { inclusive = true }
                             }
                         } else {
                             Toast.makeText(
@@ -118,7 +120,7 @@ fun LoginScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(8.dp))
 
         TextButton(onClick = {
-            navController.navigate(NavRoutes.Register.route)
+            navController.navigate(AppScreens.RegisterScreen.route)
         }) {
             Text("¿No tienes cuenta? Regístrate")
         }

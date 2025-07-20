@@ -1,19 +1,32 @@
 package com.example.finalproject.ui.Navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.finalproject.ui.Screens.BirthdayScreen
 import com.example.finalproject.ui.Screens.CareerScreen
 import com.example.finalproject.ui.Screens.GenderScreen
+import com.example.finalproject.ui.Screens.HomeScreen
+import com.example.finalproject.ui.Screens.LoginScreen
 import com.example.finalproject.ui.Screens.NameScreen
+import com.example.finalproject.ui.Screens.RegisterScreen
 import com.example.finalproject.ui.Screens.StateScreen
 
 @Composable
-fun AppNavigation(){
+fun AppNavigation(navController: NavHostController){
     val navController = rememberNavController()
-    NavHost(navController= navController, startDestination = AppScreens.NameScreen.route ){
+    NavHost(navController= navController, startDestination = AppScreens.LoginScreen.route ){
+        composable(AppScreens.LoginScreen.route) {
+            LoginScreen(navController)
+        }
+        composable(AppScreens.RegisterScreen.route) {
+            RegisterScreen(navController)
+        }
+        composable(AppScreens.HomeScreen.route) {
+            HomeScreen()
+        }
         composable(route= AppScreens.NameScreen.route){
             NameScreen({}, {}, navController)
         }

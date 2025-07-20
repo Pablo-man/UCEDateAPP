@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
+import com.example.finalproject.ui.Navigation.AppScreens
 
 @Composable
 fun BirthdayScreen(
@@ -98,7 +99,7 @@ fun BirthdayScreen(
         val isValid = year.length == 4 && month.length == 2 && day.length == 2
 
         Button(
-            onClick = onContinue,
+            onClick = {navController.navigate(route = AppScreens.GenderScreen.route)},
             enabled = isValid,
             modifier = Modifier
                 .fillMaxWidth()

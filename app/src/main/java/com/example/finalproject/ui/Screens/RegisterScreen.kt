@@ -1,4 +1,4 @@
-package com.example.finalproject.ui.navigation
+package com.example.finalproject.ui.Screens
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.finalproject.ui.Navigation.AppScreens
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -64,7 +65,7 @@ fun RegisterScreen(navController: NavHostController) {
                                         "Correo de verificación enviado. Revisa tu bandeja.",
                                         Toast.LENGTH_LONG
                                     ).show()
-                                    navController.navigate(NavRoutes.Login.route)
+                                    navController.navigate(AppScreens.LoginScreen.route)
                                 } else {
                                     Toast.makeText(
                                         context,
@@ -88,7 +89,7 @@ fun RegisterScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(12.dp))
 
         TextButton(onClick = {
-            navController.navigate(NavRoutes.Login.route)
+            navController.navigate(AppScreens.LoginScreen.route)
         }) {
             Text("¿Ya tienes cuenta? Inicia sesión")
         }

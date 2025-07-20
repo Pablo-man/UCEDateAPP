@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
+import com.example.finalproject.ui.Navigation.AppScreens
 
 @Composable
 fun GenderScreen(
@@ -75,7 +76,8 @@ fun GenderScreen(
 
         // Botón CONTINUE
         Button(
-            onClick = { selectedGender?.let { onContinue(it) } },
+            //onClick = { selectedGender?.let { onContinue(it) } },
+            onClick = {navController.navigate(route = AppScreens.CareerScreen.route)},
             enabled = selectedGender != null,
             modifier = Modifier
                 .fillMaxWidth()

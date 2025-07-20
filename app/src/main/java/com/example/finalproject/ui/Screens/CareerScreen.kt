@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import com.example.finalproject.ui.Navigation.AppScreens
 
 @Composable
 fun CareerScreen(
@@ -84,7 +85,8 @@ fun CareerScreen(
         Spacer(modifier = Modifier.weight(1f))
 
         Button(
-            onClick = { onContinue(selectedCareer, selectedSemester) },
+            //onClick = { onContinue(selectedCareer, selectedSemester) },
+            onClick = {navController.navigate(route = AppScreens.StateScreen.route)},
             enabled = selectedCareer.isNotEmpty() && selectedSemester.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()

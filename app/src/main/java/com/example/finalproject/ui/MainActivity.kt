@@ -1,4 +1,4 @@
-package com.example.finalproject.ui.navigation
+package com.example.finalproject.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.navigation.compose.rememberNavController
 import com.example.finalproject.ui.theme.FinalProjectTheme
 import androidx.compose.ui.platform.LocalInspectionMode
+import com.example.finalproject.ui.Navigation.AppNavigation
 
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
                     // ✅ Solo crea el NavController si NO estás en modo preview
                     if (!LocalInspectionMode.current) {
                         val navController = rememberNavController()
-                        AppNavGraph(navController)
+                        AppNavigation(navController)
                     } else {
                         // Muestra un dummy en previews
                         Text("Vista previa")
