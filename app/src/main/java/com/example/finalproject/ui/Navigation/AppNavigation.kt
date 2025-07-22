@@ -13,7 +13,7 @@ import com.example.finalproject.ui.Screens.LoginScreen
 import com.example.finalproject.ui.Screens.NameScreen
 import com.example.finalproject.ui.Screens.ProfileScreen
 import com.example.finalproject.ui.Screens.RegisterScreen
-import com.example.finalproject.ui.Screens.StateScreen
+import com.example.finalproject.ui.Screens.HobbiesScreen
 import com.example.finalproject.ui.Screens.WelcomeScreen
 
 @Composable
@@ -39,8 +39,8 @@ fun AppNavigation(navController: NavHostController){
         composable(route= AppScreens.GenderScreen.route){
             GenderScreen({},navController)
         }
-        composable(route= AppScreens.StateScreen.route){
-            StateScreen(navController)
+        composable(route= AppScreens.HobbieScreen.route){
+            HobbiesScreen(navController)
         }
         composable(AppScreens.Welcome.route) {
             WelcomeScreen(navController)

@@ -93,7 +93,7 @@ fun CareerScreen(
         Spacer(modifier = Modifier.weight(1f))
 
         Button(
-            onClick = {navController.navigate(route = AppScreens.StateScreen.route)},
+            onClick = {navController.navigate(route = AppScreens.HobbieScreen.route)},
             enabled = selectedCareer.isNotEmpty() && selectedSemester.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()

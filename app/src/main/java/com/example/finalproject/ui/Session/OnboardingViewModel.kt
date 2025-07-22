@@ -17,6 +17,7 @@ class OnboardingViewModel : ViewModel() {
     var birthYear by mutableStateOf("")
     var birthMonth by mutableStateOf("")
     var birthDay by mutableStateOf("")
+    var hobbies by mutableStateOf("")
     var birthDate: String = ""
         get() = "$birthYear-$birthMonth-$birthDay"
 
