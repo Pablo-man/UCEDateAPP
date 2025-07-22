@@ -13,18 +13,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
 import com.example.finalproject.ui.Navigation.AppScreens
+import com.example.finalproject.ui.Session.OnboardingViewModel
 
 @Composable
 fun GenderScreen(
     onBack: () -> Unit = {},
-    onContinue: (String) -> Unit = {},
-    navController: NavController
+    navController: NavController,
+    viewModel: OnboardingViewModel = viewModel()
 ) {
-    var selectedGender by remember { mutableStateOf<String?>(null) }
+    var selectedGender by remember { mutableStateOf(viewModel.career)}
 
     Column(
         modifier = Modifier
@@ -63,12 +64,18 @@ fun GenderScreen(
             GenderOptionButton(
                 text = "Man",
                 isSelected = selectedGender == "Man",
-                onClick = { selectedGender = "Man" }
+                onClick = {
+                    selectedGender = "Man"
+                    viewModel.gender = "Man"
+                }
             )
             GenderOptionButton(
                 text = "Woman",
                 isSelected = selectedGender == "Woman",
-                onClick = { selectedGender = "Woman" }
+                onClick = {
+                    selectedGender = "Woman"
+                    viewModel.gender = "Woman"
+                }
             )
         }
 

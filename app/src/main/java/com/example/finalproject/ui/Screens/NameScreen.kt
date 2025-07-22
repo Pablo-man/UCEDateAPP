@@ -36,9 +36,11 @@ fun NameScreen(
     navController: NavController,
     viewModel: OnboardingViewModel = viewModel()
 ) {
+
     val coroutineScope = rememberCoroutineScope()
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
