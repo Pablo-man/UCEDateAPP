@@ -12,17 +12,23 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
 import com.example.finalproject.ui.Navigation.AppScreens
+import com.example.finalproject.ui.Session.OnboardingViewModel
 
 @Composable
 fun BirthdayScreen(
-    onContinue: () -> Unit = {},
     onBack: () -> Unit = {},
-    navController: NavController
+    navController: NavController,
+    viewModel: OnboardingViewModel = viewModel()
 ) {
+
+    val coroutineScope = rememberCoroutineScope()
+    var isLoading by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -53,9 +59,9 @@ fun BirthdayScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         // Campos para año, mes y día
-        var year by remember { mutableStateOf("") }
-        var month by remember { mutableStateOf("") }
-        var day by remember { mutableStateOf("") }
+        var year by remember { mutableStateOf(viewModel.birthYear) }
+        var month by remember { mutableStateOf(viewModel.birthMonth) }
+        var day by remember { mutableStateOf(viewModel.birthDay) }
 
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -63,25 +69,41 @@ fun BirthdayScreen(
         ) {
             OutlinedTextField(
                 value = year,
-                onValueChange = { if (it.length <= 4) year = it },
+                onValueChange = {
+                    if (it.length <= 4) {
+                        year = it
+                        viewModel.birthYear = it
+                    }
+                },
                 label = { Text("YYYY") },
                 singleLine = true,
                 modifier = Modifier.weight(1f)
             )
             OutlinedTextField(
                 value = month,
-                onValueChange = { if (it.length <= 2) month = it },
+                onValueChange = {
+                    if (it.length <= 2) {
+                        month = it
+                        viewModel.birthMonth = it
+                    }
+                },
                 label = { Text("MM") },
                 singleLine = true,
                 modifier = Modifier.weight(1f)
             )
             OutlinedTextField(
                 value = day,
-                onValueChange = { if (it.length <= 2) day = it },
+                onValueChange = {
+                    if (it.length <= 2) {
+                        day = it
+                        viewModel.birthDay = it
+                    }
+                },
                 label = { Text("DD") },
                 singleLine = true,
                 modifier = Modifier.weight(1f)
             )
+
         }
 
         Spacer(modifier = Modifier.height(8.dp))

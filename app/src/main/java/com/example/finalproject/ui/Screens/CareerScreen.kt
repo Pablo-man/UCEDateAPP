@@ -14,18 +14,20 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.finalproject.ui.Navigation.AppScreens
+import com.example.finalproject.ui.Session.OnboardingViewModel
 
 @Composable
 fun CareerScreen(
     onBack: () -> Unit = {},
-    onContinue: (career: String, semester: String) -> Unit = { _, _ -> },
-    navController: NavController
+    navController: NavController,
+    viewModel: OnboardingViewModel = viewModel()
+
 ) {
-    var selectedCareer by remember { mutableStateOf("") }
-    var selectedSemester by remember { mutableStateOf("") }
+    var selectedCareer by remember { mutableStateOf(viewModel.career) }
+    var selectedSemester by remember { mutableStateOf(viewModel.semester) }
 
     val careers = listOf("Ingeniería de Software", "Medicina", "Derecho", "Arquitectura")
     val semesters = (1..10).map { it.toString() }
@@ -67,7 +69,10 @@ fun CareerScreen(
             label = "Selecciona tu carrera",
             options = careers,
             selectedOption = selectedCareer,
-            onOptionSelected = { selectedCareer = it }
+            onOptionSelected = {
+                selectedCareer = it
+                viewModel.career = it
+            }
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -79,13 +84,15 @@ fun CareerScreen(
             label = "Selecciona tu semestre",
             options = semesters,
             selectedOption = selectedSemester,
-            onOptionSelected = { selectedSemester = it }
+            onOptionSelected = {
+                selectedSemester = it
+                viewModel.semester = it
+            }
         )
 
         Spacer(modifier = Modifier.weight(1f))
 
         Button(
-            //onClick = { onContinue(selectedCareer, selectedSemester) },
             onClick = {navController.navigate(route = AppScreens.StateScreen.route)},
             enabled = selectedCareer.isNotEmpty() && selectedSemester.isNotEmpty(),
             modifier = Modifier

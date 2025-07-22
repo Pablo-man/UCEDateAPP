@@ -7,10 +7,30 @@ import androidx.lifecycle.ViewModel
 
 class OnboardingViewModel : ViewModel() {
     var name by mutableStateOf("")
+    var career by mutableStateOf("")
+    var semester by mutableStateOf("")
+    var gender by mutableStateOf("")
+    var state by mutableStateOf("")
+    var email by mutableStateOf("")
+    var photo by mutableStateOf("")
+    var pref by mutableStateOf("")
+    var birthYear by mutableStateOf("")
+    var birthMonth by mutableStateOf("")
+    var birthDay by mutableStateOf("")
+    var birthDate: String = ""
+        get() = "$birthYear-$birthMonth-$birthDay"
 
     // Puedes agregar más campos según tu flujo de onboarding
 
     fun clearData() {
         name = ""
+        birthDate = ""
+        career = ""
+        semester = ""
+        gender = ""
+        state = ""
+        email = ""
+        photo = ""
+        pref = ""
     }
 }

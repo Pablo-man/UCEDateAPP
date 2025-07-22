@@ -31,13 +31,13 @@ fun AppNavigation(navController: NavHostController){
             NameScreen({}, navController)
         }
         composable(route= AppScreens.BirthdayScreen.route){
-            BirthdayScreen({}, {}, navController)
+            BirthdayScreen({}, navController)
         }
         composable(route= AppScreens.CareerScreen.route){
-            CareerScreen({}, {_, _ -> }, navController)
+            CareerScreen({}, navController)
         }
         composable(route= AppScreens.GenderScreen.route){
-            GenderScreen({},{},navController)
+            GenderScreen({},navController)
         }
         composable(route= AppScreens.StateScreen.route){
             StateScreen(navController)
