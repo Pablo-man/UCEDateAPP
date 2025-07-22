@@ -1,5 +1,7 @@
 package com.example.finalproject.ui.Screens
 
+import kotlinx.serialization.Serializable
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -15,13 +17,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
 import com.example.finalproject.ui.Navigation.AppScreens
+import com.example.finalproject.ui.Session.OnboardingViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.contentType
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.launch
+
 
 @Composable
 fun NameScreen(
-    onContinue: () -> Unit = {},
     onClose: () -> Unit = {},
-    navController: NavController
+    navController: NavController,
+    viewModel: OnboardingViewModel = viewModel()
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    var isLoading by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -56,7 +73,10 @@ fun NameScreen(
 
         OutlinedTextField(
             value = name,
-            onValueChange = { name = it },
+            onValueChange = {
+                name = it
+                viewModel.name = it
+            },
             label = { Text("Nombre Completo") },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
@@ -75,12 +95,59 @@ fun NameScreen(
 
         // Botón continuar
         Button(
-            onClick = {navController.navigate(route = AppScreens.BirthdayScreen.route)},
+            onClick = {
+                coroutineScope.launch {
+                    isLoading = true
+                    try {
+                        sendUserDataToServer(viewModel)
+                        // Solo navegar si se envió bien
+                        navController.navigate(route = AppScreens.BirthdayScreen.route)
+                        navController.navigate(AppScreens.HomeScreen.route) {
+                            popUpTo(AppScreens.NameScreen.route) { inclusive = true }
+                        }
+                    } catch (e: Exception) {
+                        errorMessage = "Error al guardar los datos. Intenta de nuevo."
+                        Log.e("Registro", "Excepción al enviar datos", e)
+                    } finally {
+                        isLoading = false
+                    }
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp)
         ) {
             Text("CONTINUAR")
         }
+
     }
 }
+
+suspend fun sendUserDataToServer(viewModel: OnboardingViewModel) {
+    val userData = mapOf(
+        "name" to viewModel.name
+        // más campos...
+    )
+
+    Log.d("Registro", "Intentando enviar datos al backend...")
+    val client = HttpClient {
+        install(ContentNegotiation) {
+            json() // usa kotlinx.serialization
+        }
+    }
+    val response = client.post("https://936b1b8c4f37.ngrok-free.app/") {
+        contentType(ContentType.Application.Json)
+        setBody(UserData(name = viewModel.name))
+    }
+    Log.d("Registro", "Código de respuesta: ${response.status}")
+
+
+    if (response.status == HttpStatusCode.OK) {
+        Log.d("Registro", "Usuario registrado correctamente")
+    }
+}
+
+@Serializable
+data class UserData(val name: String)
+
+

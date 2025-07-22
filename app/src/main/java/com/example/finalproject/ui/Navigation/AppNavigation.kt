@@ -28,7 +28,7 @@ fun AppNavigation(navController: NavHostController){
             HomeScreen()
         }
         composable(route= AppScreens.NameScreen.route){
-            NameScreen({}, {}, navController)
+            NameScreen({}, navController)
         }
         composable(route= AppScreens.BirthdayScreen.route){
             BirthdayScreen({}, {}, navController)
