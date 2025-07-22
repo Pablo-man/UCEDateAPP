@@ -69,7 +69,7 @@ fun LoginScreen(navController: NavHostController) {
                         val user = auth.currentUser
                         if (user != null && user.isEmailVerified) {
                             Toast.makeText(context, "Bienvenido", Toast.LENGTH_SHORT).show()
-                            navController.navigate(NavRoutes.Home.route) {
+                            navController.navigate(NavRoutes.Welcome.route) {
                                 popUpTo(NavRoutes.Login.route) { inclusive = true }
                             }
                         } else {

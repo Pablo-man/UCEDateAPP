@@ -1,5 +1,7 @@
 package com.example.finalproject.ui.navigation
 
+import com.example.finalproject.ui.Principal.ProfileScreen
+import com.example.finalproject.ui.Principal.WelcomeScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -18,5 +20,12 @@ fun AppNavGraph(navController: NavHostController) {
         composable(NavRoutes.Home.route) {
             HomeScreen()
         }
+        composable(NavRoutes.Welcome.route) {
+            WelcomeScreen(navController)
+        }
+        composable(NavRoutes.Profile.route) {
+            ProfileScreen(navController)
+        }
+
     }
 }
