@@ -9,4 +9,6 @@ sealed class AppScreens(val route: String) {
     object GenderScreen: AppScreens("gender_screen")
     object NameScreen: AppScreens("name_screen")
     object StateScreen: AppScreens("state_screen")
+    object Welcome : AppScreens("welcome")
+    object Profile : AppScreens("profile")
 }

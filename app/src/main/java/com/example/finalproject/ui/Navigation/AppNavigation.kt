@@ -8,11 +8,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.finalproject.ui.Screens.BirthdayScreen
 import com.example.finalproject.ui.Screens.CareerScreen
 import com.example.finalproject.ui.Screens.GenderScreen
-import com.example.finalproject.ui.Screens.HomeScreen
+
 import com.example.finalproject.ui.Screens.LoginScreen
 import com.example.finalproject.ui.Screens.NameScreen
+import com.example.finalproject.ui.Screens.ProfileScreen
 import com.example.finalproject.ui.Screens.RegisterScreen
 import com.example.finalproject.ui.Screens.StateScreen
+import com.example.finalproject.ui.Screens.WelcomeScreen
 
 @Composable
 fun AppNavigation(navController: NavHostController){
@@ -24,9 +26,7 @@ fun AppNavigation(navController: NavHostController){
         composable(AppScreens.RegisterScreen.route) {
             RegisterScreen(navController)
         }
-        composable(AppScreens.HomeScreen.route) {
-            HomeScreen()
-        }
+
         composable(route= AppScreens.NameScreen.route){
             NameScreen({}, navController)
         }
@@ -41,6 +41,12 @@ fun AppNavigation(navController: NavHostController){
         }
         composable(route= AppScreens.StateScreen.route){
             StateScreen(navController)
+        }
+        composable(AppScreens.Welcome.route) {
+            WelcomeScreen(navController)
+        }
+        composable(AppScreens.Profile.route) {
+            ProfileScreen(navController)
         }
     }
 }
