@@ -135,7 +135,7 @@ suspend fun sendUserDataToServer(viewModel: OnboardingViewModel) {
             json() // usa kotlinx.serialization
         }
     }
-    val response = client.post("https://936b1b8c4f37.ngrok-free.app/") {
+    val response = client.post("https://8501ba66fa47.ngrok-free.app/") {
         contentType(ContentType.Application.Json)
         setBody(UserData(name = viewModel.name))
     }
