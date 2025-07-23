@@ -133,11 +133,12 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             Button(
-                onClick = { /* Acción para emparejamiento */ },
+                onClick = { navController.navigate("match_screen") },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Buscar coincidencias")
             }
+
 
             Spacer(modifier = Modifier.height(32.dp))
         }

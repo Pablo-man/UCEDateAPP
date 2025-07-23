@@ -56,5 +56,6 @@ fun AppNavigation(navController: NavHostController){
         composable(AppScreens.Profile.route) {
             ProfileScreen(navController, onboardingViewModel)
         }
+
     }
 }

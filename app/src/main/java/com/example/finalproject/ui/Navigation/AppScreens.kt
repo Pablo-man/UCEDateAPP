@@ -11,4 +11,6 @@ sealed class AppScreens(val route: String) {
     object HobbieScreen: AppScreens("hobbie_screen")
     object Welcome : AppScreens("welcome")
     object Profile : AppScreens("profile")
+
+    object MatchScreen : AppScreens("Match")
 }
