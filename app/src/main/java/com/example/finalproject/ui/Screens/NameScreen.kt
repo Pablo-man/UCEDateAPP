@@ -93,7 +93,7 @@ fun NameScreen(
         Button(
             onClick = {
                 coroutineScope.launch {
-                    navController.navigate(route = AppScreens.GenderScreen.route)
+                    navController.navigate(route = AppScreens.BirthdayScreen.route)
                 }
             },
             enabled = isValid,
