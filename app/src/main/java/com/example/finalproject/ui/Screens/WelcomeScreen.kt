@@ -11,12 +11,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.finalproject.ui.Navigation.AppScreens
+import com.example.finalproject.ui.Session.OnboardingViewModel
 
 @Composable
-fun WelcomeScreen(navController: NavController) {
+fun WelcomeScreen(
+    navController: NavController,
+    viewModel: OnboardingViewModel
+) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()

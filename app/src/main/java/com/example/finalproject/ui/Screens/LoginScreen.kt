@@ -9,13 +9,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
-import com.example.finalproject.ui.Navigation.AppNavigation
 import com.example.finalproject.ui.Navigation.AppScreens
+import com.example.finalproject.ui.Session.OnboardingViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(
+    navController: NavHostController,
+    viewModel: OnboardingViewModel
+) {
+
     val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -71,6 +77,8 @@ fun LoginScreen(navController: NavHostController) {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        viewModel.uid = auth.currentUser!!.uid
+
                         val user = auth.currentUser
                         if (user != null && user.isEmailVerified) {
                             Toast.makeText(context, "Bienvenido", Toast.LENGTH_SHORT).show()

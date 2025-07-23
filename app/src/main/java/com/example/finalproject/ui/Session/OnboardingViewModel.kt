@@ -6,7 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
 class OnboardingViewModel : ViewModel() {
-    var name by mutableStateOf("")
+    var uid by mutableStateOf("")
+    var name: String by mutableStateOf("")
     var career by mutableStateOf("")
     var semester by mutableStateOf("")
     var gender by mutableStateOf("")
@@ -24,6 +25,7 @@ class OnboardingViewModel : ViewModel() {
     // Puedes agregar más campos según tu flujo de onboarding
 
     fun clearData() {
+        uid = ""
         name = ""
         birthDate = ""
         career = ""

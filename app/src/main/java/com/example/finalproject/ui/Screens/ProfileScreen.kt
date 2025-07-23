@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
@@ -23,8 +24,9 @@ import io.ktor.client.request.get
 @Composable
 fun ProfileScreen(
     navController: NavController,
-    viewModel: OnboardingViewModel = viewModel()
+    viewModel: OnboardingViewModel
 ) {
+
     val name = viewModel.name
 
     val photoUrl = FirebaseAuth.getInstance().currentUser?.photoUrl?.toString()

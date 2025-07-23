@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.unit.*
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.finalproject.ui.Navigation.AppScreens
 import com.example.finalproject.ui.Session.OnboardingViewModel
@@ -23,7 +24,7 @@ import com.example.finalproject.ui.Session.OnboardingViewModel
 fun GenderScreen(
     onBack: () -> Unit = {},
     navController: NavController,
-    viewModel: OnboardingViewModel = viewModel()
+    viewModel: OnboardingViewModel
 ) {
     var selectedGender by remember { mutableStateOf(viewModel.career)}
 

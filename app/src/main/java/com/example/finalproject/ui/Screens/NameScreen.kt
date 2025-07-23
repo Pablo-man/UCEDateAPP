@@ -19,14 +19,7 @@ import androidx.navigation.NavController
 import com.example.finalproject.ui.Navigation.AppScreens
 import com.example.finalproject.ui.Session.OnboardingViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import io.ktor.client.HttpClient
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.request.post
-import io.ktor.client.request.setBody
-import io.ktor.http.ContentType
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.contentType
-import io.ktor.serialization.kotlinx.json.json
+import androidx.navigation.NavBackStackEntry
 import kotlinx.coroutines.launch
 
 
@@ -34,11 +27,10 @@ import kotlinx.coroutines.launch
 fun NameScreen(
     onClose: () -> Unit = {},
     navController: NavController,
-    viewModel: OnboardingViewModel = viewModel()
+    viewModel: OnboardingViewModel
 ) {
 
     val coroutineScope = rememberCoroutineScope()
-    var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
     Column(
@@ -95,26 +87,16 @@ fun NameScreen(
 
         Spacer(modifier = Modifier.weight(1f))
 
+        val isValid = name.length >= 4
+
         // Botón continuar
         Button(
             onClick = {
                 coroutineScope.launch {
-                    isLoading = true
-                    try {
-                        sendUserDataToServer(viewModel)
-                        // Solo navegar si se envió bien
-                        navController.navigate(route = AppScreens.BirthdayScreen.route)
-                        navController.navigate(AppScreens.HomeScreen.route) {
-                            popUpTo(AppScreens.NameScreen.route) { inclusive = true }
-                        }
-                    } catch (e: Exception) {
-                        errorMessage = "Error al guardar los datos. Intenta de nuevo."
-                        Log.e("Registro", "Excepción al enviar datos", e)
-                    } finally {
-                        isLoading = false
-                    }
+                    navController.navigate(route = AppScreens.GenderScreen.route)
                 }
             },
+            enabled = isValid,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp)
@@ -124,32 +106,4 @@ fun NameScreen(
 
     }
 }
-
-suspend fun sendUserDataToServer(viewModel: OnboardingViewModel) {
-    val userData = mapOf(
-        "name" to viewModel.name
-        // más campos...
-    )
-
-    Log.d("Registro", "Intentando enviar datos al backend...")
-    val client = HttpClient {
-        install(ContentNegotiation) {
-            json() // usa kotlinx.serialization
-        }
-    }
-    val response = client.post("https://8501ba66fa47.ngrok-free.app/") {
-        contentType(ContentType.Application.Json)
-        setBody(UserData(name = viewModel.name))
-    }
-    Log.d("Registro", "Código de respuesta: ${response.status}")
-
-
-    if (response.status == HttpStatusCode.OK) {
-        Log.d("Registro", "Usuario registrado correctamente")
-    }
-}
-
-@Serializable
-data class UserData(val name: String)
-
 

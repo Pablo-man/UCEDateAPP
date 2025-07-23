@@ -15,6 +15,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.finalproject.ui.Navigation.AppScreens
 import com.example.finalproject.ui.Session.OnboardingViewModel
@@ -23,7 +24,7 @@ import com.example.finalproject.ui.Session.OnboardingViewModel
 fun CareerScreen(
     onBack: () -> Unit = {},
     navController: NavController,
-    viewModel: OnboardingViewModel = viewModel()
+    viewModel: OnboardingViewModel
 
 ) {
     var selectedCareer by remember { mutableStateOf(viewModel.career) }

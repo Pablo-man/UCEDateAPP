@@ -7,12 +7,18 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import com.example.finalproject.ui.Navigation.AppScreens
+import com.example.finalproject.ui.Session.OnboardingViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun RegisterScreen(navController: NavHostController) {
+fun RegisterScreen(
+    navController: NavHostController,
+) {
+
     val auth = FirebaseAuth.getInstance()
     val context = LocalContext.current
 
