@@ -16,6 +16,7 @@ import com.example.finalproject.ui.Screens.NameScreen
 import com.example.finalproject.ui.Screens.ProfileScreen
 import com.example.finalproject.ui.Screens.RegisterScreen
 import com.example.finalproject.ui.Screens.HobbiesScreen
+import com.example.finalproject.ui.Screens.MatchScreen
 import com.example.finalproject.ui.Screens.WelcomeScreen
 import com.example.finalproject.ui.Session.OnboardingViewModel
 
@@ -55,6 +56,9 @@ fun AppNavigation(navController: NavHostController){
         }
         composable(AppScreens.Profile.route) {
             ProfileScreen(navController, onboardingViewModel)
+        }
+        composable("match_screen") {
+            MatchScreen(navController = navController, viewModel = onboardingViewModel)
         }
 
     }
