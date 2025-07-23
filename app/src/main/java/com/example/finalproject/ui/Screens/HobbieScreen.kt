@@ -30,17 +30,6 @@ fun HobbiesScreen(
     val database = FirebaseDatabase.getInstance()
     val uid = auth.currentUser?.uid
 
-    val userData = mapOf(
-        "uid" to viewModel.uid,
-        "name" to viewModel.name,
-        "birthDate" to viewModel.birthDate,
-        "gender" to viewModel.gender,
-        "career" to viewModel.career,
-        "semester" to viewModel.semester,
-        "state" to viewModel.state,
-        "hobbies" to viewModel.hobbies,
-    )
-
     val hobbies = listOf(
         "Música", "Deportes", "Cine", "Lectura", "Videojuegos",
         "Senderismo", "Programación"
@@ -93,6 +82,18 @@ fun HobbiesScreen(
         Button(
             onClick = {
                 viewModel.hobbies = selectedHobbies.toList()
+
+                val userData = mapOf(
+                    "uid" to viewModel.uid,
+                    "name" to viewModel.name,
+                    "birthDate" to viewModel.birthDate,
+                    "gender" to viewModel.gender,
+                    "career" to viewModel.career,
+                    "semester" to viewModel.semester,
+                    "state" to viewModel.state,
+                    "hobbies" to viewModel.hobbies,
+                )
+
                 uid?.let {
                     database.getReference("users")
                         .child(it)

@@ -50,7 +50,7 @@ fun GenderScreen(
 
         // Título
         Text(
-            text = "I am a",
+            text = "Soy",
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold
         )
@@ -63,19 +63,19 @@ fun GenderScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             GenderOptionButton(
-                text = "Man",
-                isSelected = selectedGender == "Man",
+                text = "Hombre",
+                isSelected = selectedGender == "Hombre",
                 onClick = {
-                    selectedGender = "Man"
-                    viewModel.gender = "Man"
+                    selectedGender = "Hombre"
+                    viewModel.gender = "Hombre"
                 }
             )
             GenderOptionButton(
-                text = "Woman",
-                isSelected = selectedGender == "Woman",
+                text = "Mujer",
+                isSelected = selectedGender == "Mujer",
                 onClick = {
-                    selectedGender = "Woman"
-                    viewModel.gender = "Woman"
+                    selectedGender = "Mujer"
+                    viewModel.gender = "Mujer"
                 }
             )
         }
