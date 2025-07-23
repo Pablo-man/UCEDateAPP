@@ -12,8 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.finalproject.ui.Navigation.AppScreens
 import com.example.finalproject.ui.Session.OnboardingViewModel
@@ -37,6 +35,10 @@ fun HobbiesScreen(
         "name" to viewModel.name,
         "birthDate" to viewModel.birthDate,
         "gender" to viewModel.gender,
+        "career" to viewModel.career,
+        "semester" to viewModel.semester,
+        "state" to viewModel.state,
+        "hobbies" to viewModel.hobbies,
     )
 
     val hobbies = listOf(
@@ -90,6 +92,7 @@ fun HobbiesScreen(
 
         Button(
             onClick = {
+                viewModel.hobbies = selectedHobbies.toList()
                 uid?.let {
                     database.getReference("users")
                         .child(it)
