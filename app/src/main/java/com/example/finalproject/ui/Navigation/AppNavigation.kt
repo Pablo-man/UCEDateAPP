@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.finalproject.ui.Screens.BirthdayScreen
 import com.example.finalproject.ui.Screens.CareerScreen
+import com.example.finalproject.ui.Screens.ChatScreen
 import com.example.finalproject.ui.Screens.GenderScreen
 
 import com.example.finalproject.ui.Screens.LoginScreen
@@ -60,6 +61,13 @@ fun AppNavigation(navController: NavHostController){
         composable("match_screen") {
             MatchScreen(navController = navController, viewModel = onboardingViewModel)
         }
+        composable("chat/{receiverName}/{receiverUid}") { backStackEntry ->
+            val receiverName = backStackEntry.arguments?.getString("receiverName") ?: ""
+            val receiverUid = backStackEntry.arguments?.getString("receiverUid") ?: ""
+            ChatScreen(navController, viewModel(), receiverName, receiverUid)
+        }
+
+
 
     }
 }

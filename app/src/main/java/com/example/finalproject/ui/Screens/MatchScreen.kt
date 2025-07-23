@@ -3,6 +3,7 @@ package com.example.finalproject.ui.Screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -12,7 +13,8 @@ import com.example.finalproject.ui.Session.OnboardingViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-data class UserMatch(val name: String, val commonHobbies: List<String>)
+data class UserMatch(val uid: String, val name: String, val commonHobbies: List<String>)
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,10 +38,11 @@ fun MatchScreen(
                 val otherUsers = snapshot.children.filter { it.key != currentUid }
 
                 val matchResults = otherUsers.mapNotNull { userSnapshot ->
+                    val uid = userSnapshot.key ?: return@mapNotNull null
                     val name = userSnapshot.child("name").getValue(String::class.java) ?: return@mapNotNull null
                     val hobbies = userSnapshot.child("hobbies").children.mapNotNull { it.getValue(String::class.java) }
                     val common = currentUserHobbies.intersect(hobbies.toSet())
-                    if (common.isNotEmpty()) UserMatch(name, common.toList()) else null
+                    if (common.isNotEmpty()) UserMatch(uid, name, common.toList()) else null
                 }
 
                 matches = matchResults
@@ -60,11 +63,12 @@ fun MatchScreen(
             )
         }
     ) { padding ->
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
-            .padding(16.dp)) {
-
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(16.dp)
+        ) {
             if (isLoading) {
                 CircularProgressIndicator(modifier = Modifier.padding(top = 32.dp))
             } else if (matches.isEmpty()) {
@@ -78,12 +82,25 @@ fun MatchScreen(
                                 .padding(vertical = 8.dp),
                             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                         ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Text(match.name, style = MaterialTheme.typography.titleMedium)
-                                Text(
-                                    "Coincidencias: ${match.commonHobbies.joinToString(", ")}",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Column {
+                                    Text(match.name, style = MaterialTheme.typography.titleMedium)
+                                    Text(
+                                        "Coincidencias: ${match.commonHobbies.joinToString(", ")}",
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                }
+                                Button(onClick = {
+                                    navController.navigate("chat/${match.name}/${match.uid}")
+                                }) {
+                                    Text("Chat")
+                                }
+
                             }
                         }
                     }
