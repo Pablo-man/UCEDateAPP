@@ -9,8 +9,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -56,6 +58,8 @@ fun ProfileScreen(
     val turquoise = Color(0xFF1DE9B6)
     val pinkNeon = Color(0xFFFF69B4)
     val darkBg = Color(0xFF23243A)
+
+    val scrollState = rememberScrollState()
 
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -136,13 +140,16 @@ fun ProfileScreen(
                 .fillMaxHeight(0.98f)
                 .padding(18.dp)
         ) {
+
             Column(
                 modifier = Modifier
+                    .verticalScroll(scrollState)
                     .padding(horizontal = 24.dp)
                     .padding(top = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(24.dp))
+
+            Spacer(modifier = Modifier.height(24.dp))
 
                 Box(
                     modifier = Modifier
