@@ -86,5 +86,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("io.coil-kt:coil-compose:2.4.0")
 
+    implementation("androidx.activity:activity-compose:1.8.2") // para el image picker
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")       // para subir la imagen
 
 }
