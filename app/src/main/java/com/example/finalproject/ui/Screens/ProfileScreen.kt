@@ -81,7 +81,6 @@ fun ProfileScreen(
         }
     }
 
-
     var name by remember { mutableStateOf("Cargando...") }
     var state by remember { mutableStateOf("Estado desconocido") }
     var career by remember { mutableStateOf("") }
@@ -104,6 +103,14 @@ fun ProfileScreen(
             }
         }
     }
+
+    viewModel.name= name
+    viewModel.state= state
+    viewModel.career = career
+    viewModel.semester = semester
+    viewModel.gender = gender
+    viewModel.birthDate = birthDate
+    viewModel.hobbies = hobbies
 
     val photoUrl = auth.currentUser?.photoUrl?.toString()
         ?: "https://cdn-icons-png.flaticon.com/512/149/149071.png"

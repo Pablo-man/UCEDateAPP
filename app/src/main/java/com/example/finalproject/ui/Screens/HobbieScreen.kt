@@ -141,7 +141,7 @@ fun HobbiesScreen(
                                 .child(it)
                                 .setValue(userData)
                                 .addOnSuccessListener {
-                                    navController.navigate(AppScreens.Welcome.route)
+                                    navController.navigate(AppScreens.Profile.route)
                                 }
                                 .addOnFailureListener { e ->
                                     Toast.makeText(
