@@ -6,14 +6,18 @@ import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -48,6 +52,10 @@ fun ProfileScreen(
 
     val context = LocalContext.current
     var imageUri by remember { mutableStateOf<Uri?>(null) }
+
+    val turquoise = Color(0xFF1DE9B6)
+    val pinkNeon = Color(0xFFFF69B4)
+    val darkBg = Color(0xFF23243A)
 
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -100,103 +108,138 @@ fun ProfileScreen(
     val photoUrl = auth.currentUser?.photoUrl?.toString()
         ?: "https://cdn-icons-png.flaticon.com/512/149/149071.png"
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("") },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
-            )
-        }
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(horizontal = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Box(
-                modifier = Modifier
-                    .size(140.dp)
-                    .clip(CircleShape)
-                    .clickable {
-                        imagePickerLauncher.launch("image/*")
-                    },
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = rememberAsyncImagePainter(imageUri ?: photoUrl),
-                    contentDescription = "Foto de perfil",
-                    modifier = Modifier.matchParentSize(),
-                    contentScale = ContentScale.Crop
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(turquoise, pinkNeon, darkBg)
                 )
-            }
-
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = name,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
-
-            Text(
-                text = state,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
-                elevation = CardDefaults.cardElevation(4.dp)
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Card(
+            shape = RoundedCornerShape(28.dp),
+            elevation = CardDefaults.cardElevation(16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White.copy(alpha = 0.90f)
+            ),
+            modifier = Modifier
+                .fillMaxWidth(0.95f)
+                .fillMaxHeight(0.98f)
+                .padding(18.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    ProfileField(label = "Carrera", value = career)
-                    ProfileField(label = "Semestre", value = semester)
-                    ProfileField(label = "Género", value = gender)
-                    ProfileField(label = "Fecha de nacimiento", value = birthDate)
-                    if (hobbies.isNotEmpty()) {
-                        ProfileField(label = "Hobbies", value = hobbies.joinToString(", "))
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Box(
+                    modifier = Modifier
+                        .size(140.dp)
+                        .clip(CircleShape)
+                        .background(pinkNeon.copy(alpha = 0.15f))
+                        .clickable {
+                            imagePickerLauncher.launch("image/*")
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = rememberAsyncImagePainter(imageUri ?: photoUrl),
+                        contentDescription = "Foto de perfil",
+                        modifier = Modifier.matchParentSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(18.dp))
+
+                Text(
+                    text = name,
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = pinkNeon
+                )
+
+                Text(
+                    text = state,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = turquoise,
+                    fontWeight = FontWeight.Medium
+                )
+
+                Spacer(modifier = Modifier.height(26.dp))
+
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(18.dp),
+                    colors = CardDefaults.cardColors(containerColor = turquoise.copy(alpha = 0.22f)),
+                    elevation = CardDefaults.cardElevation(4.dp)
+                ) {
+                    Column(modifier = Modifier.padding(18.dp)) {
+                        ProfileField(label = "Carrera", value = career)
+                        ProfileField(label = "Semestre", value = semester)
+                        ProfileField(label = "Género", value = gender)
+                        ProfileField(label = "Fecha de nacimiento", value = birthDate)
+                        if (hobbies.isNotEmpty()) {
+                            ProfileField(label = "Hobbies", value = hobbies.joinToString(", "))
+                        }
                     }
                 }
+
+                Spacer(modifier = Modifier.height(26.dp))
+
+                Button(
+                    onClick = { navController.navigate("name_screen") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(54.dp),
+                    shape = RoundedCornerShape(14.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = pinkNeon,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("Editar perfil", fontWeight = FontWeight.Bold)
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = { navController.navigate("hobbie_screen") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(54.dp),
+                    shape = RoundedCornerShape(14.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = turquoise,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("Editar gustos", fontWeight = FontWeight.Bold)
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = { navController.navigate("match_screen") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(54.dp),
+                    shape = RoundedCornerShape(14.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = darkBg,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("Buscar coincidencias", fontWeight = FontWeight.Bold)
+                }
+
+                Spacer(modifier = Modifier.height(32.dp))
             }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Button(
-                onClick = { navController.navigate("name_screen") },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Editar perfil")
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Button(
-                onClick = { navController.navigate("hobbie_screen") },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Editar gustos")
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Button(
-                onClick = { navController.navigate("match_screen") },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Buscar coincidencias")
-            }
-
-
-
-            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
@@ -207,14 +250,15 @@ fun ProfileField(label: String, value: String) {
         Text(
             text = label,
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = Color(0xFF23243A)
         )
         Text(
             text = value,
             style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.Medium,
+            color = Color.Black
         )
-        Divider(modifier = Modifier.padding(vertical = 4.dp))
+        Divider(modifier = Modifier.padding(vertical = 4.dp), color = Color(0xFF1DE9B6))
     }
 }
 

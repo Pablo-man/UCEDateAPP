@@ -3,15 +3,19 @@ package com.example.finalproject.ui.Screens
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.graphics.Color
+import android.graphics.Color as AndroidColor
 import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationCompat
@@ -54,52 +58,129 @@ fun ChatScreen(
         onDispose { dbRef.removeEventListener(listener) }
     }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text("Chat con $receiverName", style = MaterialTheme.typography.titleLarge)
+    // Colores personalizados
+    val turquoise = Color(0xFF1DE9B6)
+    val pinkNeon = Color(0xFFFF69B4)
+    val darkBg = Color(0xFF23243A)
 
-        Spacer(Modifier.height(8.dp))
-
-        LazyColumn(
-            modifier = Modifier.weight(1f),
-            reverseLayout = false
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(darkBg, turquoise, pinkNeon)
+                )
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Card(
+            shape = RoundedCornerShape(28.dp),
+            elevation = CardDefaults.cardElevation(14.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White.copy(alpha = 0.92f)
+            ),
+            modifier = Modifier
+                .fillMaxWidth(0.98f)
+                .fillMaxHeight(0.98f)
         ) {
-            items(messages) { msg ->
-                val isMe = msg.sender == currentUid
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = if (isMe) Arrangement.End else Arrangement.Start
-                ) {
-                    Text(
-                        msg.text,
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .background(if (isMe) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
-                            .padding(8.dp)
-                    )
-                }
-            }
-        }
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(18.dp)
+            ) {
+                Text(
+                    "Chat con $receiverName",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = pinkNeon,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(vertical = 8.dp)
+                )
 
-        Row {
-            TextField(
-                value = message,
-                onValueChange = { message = it },
-                modifier = Modifier.weight(1f),
-                placeholder = { Text("Escribe un mensaje") }
-            )
-            Button(onClick = {
-                if (message.isNotBlank()) {
-                    val msg = ChatMessage(
-                        sender = currentUid,
-                        text = message,
-                        timestamp = System.currentTimeMillis()
-                    )
-                    dbRef.push().setValue(msg)
-                    message = ""
+                Spacer(Modifier.height(8.dp))
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(vertical = 4.dp),
+                    reverseLayout = false
+                ) {
+                    items(messages) { msg ->
+                        val isMe = msg.sender == currentUid
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 2.dp),
+                            horizontalArrangement = if (isMe) Arrangement.End else Arrangement.Start
+                        ) {
+                            Surface(
+                                shape = RoundedCornerShape(16.dp),
+                                color = if (isMe) turquoise else pinkNeon.copy(alpha = 0.8f),
+                                tonalElevation = 4.dp,
+                                shadowElevation = 2.dp,
+                                modifier = Modifier
+                                    .widthIn(max = 260.dp)
+                                    .padding(horizontal = 6.dp)
+                            ) {
+                                Text(
+                                    msg.text,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = if (isMe) Color.White else Color.Black,
+                                    modifier = Modifier
+                                        .padding(12.dp)
+                                )
+                            }
+                        }
+                    }
                 }
-            }) {
-                Text("Enviar")
+
+                Spacer(Modifier.height(6.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 6.dp)
+                ) {
+                    TextField(
+                        value = message,
+                        onValueChange = { message = it },
+                        placeholder = { Text("Escribe un mensaje") },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(50.dp),
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = Color.White,
+                            unfocusedContainerColor = Color.White,
+                            focusedIndicatorColor = turquoise,
+                            unfocusedIndicatorColor = turquoise.copy(alpha = 0.5f),
+                            cursorColor = pinkNeon
+                        ),
+                        shape = RoundedCornerShape(14.dp)
+                    )
+                    Spacer(Modifier.width(10.dp))
+                    Button(
+                        onClick = {
+                            if (message.isNotBlank()) {
+                                val msg = ChatMessage(
+                                    sender = currentUid,
+                                    text = message,
+                                    timestamp = System.currentTimeMillis()
+                                )
+                                dbRef.push().setValue(msg)
+                                message = ""
+                            }
+                        },
+                        shape = RoundedCornerShape(14.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = pinkNeon,
+                            contentColor = Color.White
+                        ),
+                        modifier = Modifier.height(50.dp)
+                    ) {
+                        Text("Enviar", fontWeight = FontWeight.Bold)
+                    }
+                }
             }
         }
     }
