@@ -89,4 +89,6 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.8.2") // para el image picker
     implementation("com.squareup.okhttp3:okhttp:4.12.0")       // para subir la imagen
 
+    implementation("com.google.firebase:firebase-messaging:25.0.0")
+
 }
