@@ -89,7 +89,7 @@ fun ChatScreen(
                 .padding(18.dp)
             ) {
                 Text(
-                    "Chat con $receiverName",
+                    "$receiverName",
                     style = MaterialTheme.typography.titleLarge,
                     color = pinkNeon,
                     fontWeight = FontWeight.Bold,
@@ -97,6 +97,16 @@ fun ChatScreen(
                         .align(Alignment.CenterHorizontally)
                         .padding(vertical = 8.dp)
                 )
+
+                TextButton(
+                    onClick = {
+                        navController.navigate("public_profile/$receiverUid")
+                    },
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    Text("Ver perfil", color = Color.Gray)
+                }
+
 
                 Spacer(Modifier.height(8.dp))
 

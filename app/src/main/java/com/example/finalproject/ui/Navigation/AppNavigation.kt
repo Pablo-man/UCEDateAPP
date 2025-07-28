@@ -18,6 +18,7 @@ import com.example.finalproject.ui.Screens.ProfileScreen
 import com.example.finalproject.ui.Screens.RegisterScreen
 import com.example.finalproject.ui.Screens.HobbiesScreen
 import com.example.finalproject.ui.Screens.MatchScreen
+import com.example.finalproject.ui.Screens.PublicProfileScreen
 import com.example.finalproject.ui.Screens.WelcomeScreen
 import com.example.finalproject.ui.Session.OnboardingViewModel
 
@@ -66,6 +67,11 @@ fun AppNavigation(navController: NavHostController){
             val receiverUid = backStackEntry.arguments?.getString("receiverUid") ?: ""
             ChatScreen(navController, viewModel(), receiverName, receiverUid)
         }
+        composable("public_profile/{uid}") { backStackEntry ->
+            val userUid = backStackEntry.arguments?.getString("uid") ?: ""
+            PublicProfileScreen(navController, userUid)
+        }
+
 
 
 
