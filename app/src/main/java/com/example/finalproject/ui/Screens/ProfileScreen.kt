@@ -301,7 +301,7 @@ fun uploadImageToBackend(
             .build()
 
         val request = Request.Builder()
-            .url("http://13.217.146.85:3000/upload")
+            .url("http://13.222.161.205:3000/upload")
             .post(requestBody)
             .build()
 
