@@ -80,6 +80,9 @@ fun ProfileScreen(
                         .setPhotoUri(Uri.parse(cloudinaryUrl))
                         .build()
                     user?.updateProfile(profileUpdate)
+
+                    // 🔥 Guardar en el ViewModel
+                    viewModel.photo = cloudinaryUrl
                 }
             }
         }

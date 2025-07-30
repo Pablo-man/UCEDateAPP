@@ -134,6 +134,7 @@ fun HobbiesScreen(
                             "semester" to viewModel.semester,
                             "state" to viewModel.state,
                             "hobbies" to viewModel.hobbies,
+                            "photo" to viewModel.photo
                         )
 
                         uid?.let {

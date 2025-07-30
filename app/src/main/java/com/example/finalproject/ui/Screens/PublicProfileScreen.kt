@@ -1,13 +1,7 @@
 package com.example.finalproject.ui.Screens
 
-import android.content.Context
-import android.net.Uri
-import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -21,26 +15,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.finalproject.ui.Session.OnboardingViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.FirebaseDatabase
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
-import okio.IOException
-import org.json.JSONObject
+
 @Composable
 fun PublicProfileScreen(
     navController: NavController,
@@ -58,7 +39,7 @@ fun PublicProfileScreen(
     var gender by remember { mutableStateOf("") }
     var birthDate by remember { mutableStateOf("") }
     var hobbies by remember { mutableStateOf(listOf<String>()) }
-    var photoUrl by remember { mutableStateOf("https://cdn-icons-png.flaticon.com/512/149/149071.png") }
+    var photo by remember { mutableStateOf("https://cdn-icons-png.flaticon.com/512/149/149071.png") }
 
     LaunchedEffect(userUid) {
         val ref = database.getReference("users").child(userUid)
@@ -71,7 +52,7 @@ fun PublicProfileScreen(
             birthDate = snapshot.child("birthDate").getValue(String::class.java) ?: ""
             hobbies = snapshot.child("hobbies").children.mapNotNull { it.getValue(String::class.java) }
 
-            photoUrl = snapshot.child("photoUrl").getValue(String::class.java)
+            photo = snapshot.child("photo").getValue(String::class.java)
                 ?: "https://cdn-icons-png.flaticon.com/512/149/149071.png"
         }
     }
@@ -98,7 +79,7 @@ fun PublicProfileScreen(
                 Spacer(Modifier.height(24.dp))
 
                 Image(
-                    painter = rememberAsyncImagePainter(photoUrl),
+                    painter = rememberAsyncImagePainter(photo),
                     contentDescription = "Foto de perfil",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
